@@ -73,6 +73,14 @@
 					"match": "\\b[0-9]+\\b"
 				}
 			]
+		},
+		"symbol": {
+			"patterns": [
+				{
+					"name": "punctuation.definition.symbol.ddlbx",
+					"match": "\\b[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?~]+\\b"
+				}
+			]
 		}
 	},
 	"scopeName": "source.ddlbx"
