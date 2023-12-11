@@ -1,0 +1,87 @@
+{
+    "name": "ddlbx-theme-Dark+",
+    "colors": {
+        "activityBarBadge.background": "#eb444a",
+        "sideBarTitle.foreground": "#00eeff",
+        "activityBar.activeBorder": "#00eeff",
+        "activityBar.background": "#32586b",
+        "activityBar.foreground": "#00eeff",
+        "activityBar.inactiveForeground": "#3f9afb",
+        "titleBar.activeBackground": "#32586b"
+    },
+    "tokenColors": [
+        {
+            "name": "Keyword",
+            "scope": [
+                "keyword.control"
+            ],
+            "settings": {
+                "foreground": "#C792EA"
+            }
+        },
+        {
+            "name": "types",
+            "scope": [
+                "storage.type"
+            ],
+            "settings": {
+                "foreground": "#A9DEF9"
+            }
+        },
+        {
+            "name": "String",
+            "scope": [
+                "string"
+            ],
+            "settings": {
+                "foreground": "#C3E88D"
+            }
+        },
+        {
+            "name": "Variable",
+            "scope": [
+                "variable",
+                "meta.definition.variable"
+            ],
+            "settings": {
+                "foreground": "#FFCB6B"
+            }
+        },
+        {
+            "name": "Comment",
+            "scope": [
+                "comment"
+            ],
+            "settings": {
+                "foreground": "#546E7A"
+            }
+        },
+        {
+            "name": "Number",
+            "scope": [
+                "constant.numeric"
+            ],
+            "settings": {
+                "foreground": "#F78C6C"
+            }
+        },
+        {
+            "name": "Function",
+            "scope": [
+                "entity.name.function"
+            ],
+            "settings": {
+                "foreground": "#82AAFF"
+            }
+        },
+        {
+            "name": "Operator",
+            "scope": [
+                "keyword.operator"
+            ],
+            "settings": {
+                "foreground": "#89DDFF"
+            }
+        }
+    ]
+}

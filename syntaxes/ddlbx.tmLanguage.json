@@ -1,0 +1,79 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "DDLBX",
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#types"
+		},
+		{
+			"include": "#strings"
+		},
+		{
+			"include": "#variables"
+		},
+		{
+			"include": "#comments"
+		},
+		{
+			"include": "#numbers"
+		}
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [
+				{
+					"name": "keyword.control.ddlbx",
+					"match": "\\b(while)\\b"
+				}
+			]
+		},
+		"types": {
+			"patterns": [
+				{
+					"name": "storage.type.ddlbx",
+					"match": "\\b(Int|Flo|Str|Boo|Reg|List)\\b"
+				}
+			]
+		},
+		"strings": {
+			"name": "string.quoted.double.ddlbx",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.ddlbx",
+					"match": "\\\\."
+				}
+			]
+		},
+		"variables": {
+			"patterns": [
+				{
+					"name": "variable.other.ddlbx",
+					"match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\b",
+					"discribe":"Int a = 0!"
+				}
+			]
+		},
+		"comments": {
+			"patterns": [
+				{
+					"name": "comment.line.double-slash.ddlbx",
+					"match": "//.*$"
+				}
+			]
+		},
+		"numbers": {
+			"patterns": [
+				{
+					"name": "constant.numeric.ddlbx",
+					"match": "\\b[0-9]+\\b"
+				}
+			]
+		}
+	},
+	"scopeName": "source.ddlbx"
+}
