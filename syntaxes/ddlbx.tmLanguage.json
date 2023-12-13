@@ -1,87 +1,76 @@
 {
-	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
-	"name": "DDLBX",
-	"patterns": [
-		{
-			"include": "#keywords"
-		},
-		{
-			"include": "#types"
-		},
-		{
-			"include": "#strings"
-		},
-		{
-			"include": "#variables"
-		},
-		{
-			"include": "#comments"
-		},
-		{
-			"include": "#numbers"
-		}
-	],
-	"repository": {
-		"keywords": {
-			"patterns": [
-				{
-					"name": "keyword.control.ddlbx",
-					"match": "\\b(while)\\b"
-				}
-			]
-		},
-		"types": {
-			"patterns": [
-				{
-					"name": "storage.type.ddlbx",
-					"match": "\\b(Int|Flo|Str|Boo|Reg|List)\\b"
-				}
-			]
-		},
-		"strings": {
-			"name": "string.quoted.double.ddlbx",
-			"begin": "\"",
-			"end": "\"",
-			"patterns": [
-				{
-					"name": "constant.character.escape.ddlbx",
-					"match": "\\\\."
-				}
-			]
-		},
-		"variables": {
-			"patterns": [
-				{
-					"name": "variable.other.ddlbx",
-					"match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\b",
-					"discribe":"Int a = 0!"
-				}
-			]
-		},
-		"comments": {
-			"patterns": [
-				{
-					"name": "comment.line.double-slash.ddlbx",
-					"match": "//.*$"
-				}
-			]
-		},
-		"numbers": {
-			"patterns": [
-				{
-					"name": "constant.numeric.ddlbx",
-					"match": "\\b[0-9]+\\b"
-				}
-			]
-		},
-		"symbol": {
-			"patterns": [
-				{
-					"name": "punctuation.definition.symbol.ddlbx",
-					"match": "\\b[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?~]+\\b"
-				}
-			]
-		}
-	},
-	"scopeName": "source.ddlbx"
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "DDLBX",
+  "patterns": [
+    {
+      "name": "character",
+      "begin": "\\'",
+      "end": "\\'",
+      "patterns": [
+        {
+          "include": "#letter"
+        },
+        {
+          "include": "#digit"
+        },
+        {
+          "include": "#symbol"
+        }
+      ]
+    },
+    {
+      "name": "identifier",
+      "match": "\\b(Int|Flo|Str|Boo|Reg|List)\\b"
+    },
+    {
+      "name": "expressions",
+      "begin": "\\b(\\{)\\b",
+      "end": "\\b(\\})\\b",
+      "patterns": [
+        {
+          "include": "#operator"
+        },
+        {
+          "include": "expression"
+        }
+      ]
+    },
+    { "include": "#type" }
+  ],
+  "repository": {
+    "letter": {
+      "name": "letter",
+      "match": "\\b([a-zA-Z])\\b"
+    },
+    "digit": {
+      "name": "digit",
+      "match": "\\b([0-9])\\b"
+    },
+    "symbol": {
+      "name": "symbol",
+      "match": "\\b([!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?~]+)\\b"
+    },
+    "operator": {
+      "name": "operator",
+      "match": "\b(+|-|*|/|+=|-=|*=|/=|==|<|>|<=|>=|&&||||=)\b"
+    },
+    "expression": {
+      "name": "expression",
+      "begin": "\\b(\\{)\\b",
+      "end": "\\b(\\})\\b",
+      "patterns": [
+        {
+          "include": "#operator"
+        },
+        {
+          "include": "expression"
+        }
+      ]
+    },
+    "type": {
+      "name": "type",
+      "match": "\\b(Int|Flo|Str|Boo|Reg|List)\\b"
+    }
+  },
+  "scopeName": "source.ddlbx"
 }

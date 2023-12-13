@@ -87,21 +87,16 @@ type:
   - "List"
   - "<" type ">"
 
-expression:
-  - (identifier
-    | literal
-    | function-call
-    | object-call
-    | expression operator expression
-    | "(" expression ")"
-    | regex)
-    | reversing
-
 literal:
   - number
   - string
   - boolean
   - list
+  
+expression:
+  - (identifier| literal| function-call| object-call | expression operator expression| "(" expression ")"| regex)| reversing
+
+
 
 number: ["-" ] digit+ ["." digit+]
 
