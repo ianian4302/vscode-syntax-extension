@@ -35,8 +35,96 @@
       "name": "identifier",
       "scope": ["identifier"],
       "settings": {
+        "foreground": "#66D7D1"
+      }
+    },
+    {
+      "name": "keyword",
+      "scope": ["keyword"],
+      "settings": {
         "foreground": "#d1c10e"
       }
+    },
+    {
+      "name": "keyword.operator",
+      "scope": ["keyword.operator"],
+      "settings": {
+        "foreground": "#d1c10e"
+      }
+    },
+    {
+      "name": "keyword.operator.new",
+      "scope": ["keyword.operator.new"],
+      "settings": {
+        "foreground": "#d1c10e"
+      }
+    },
+    {
+      "name": "keyword.operator.expression",
+      "scope": ["keyword.operator.expression"],
+      "settings": {
+        "foreground": "#d1c10e"
+      }
+    },
+    {
+      "name": "keyword.operator.cast",
+      "scope": ["keyword.operator.cast"],
+      "settings": {
+        "foreground": "#d1c10e"
+      }
+    },
+    {
+      "name": "keyword.operator.sizeof",
+      "scope": ["keyword.operator.sizeof"],
+      "settings": {
+        "foreground": "#d1c10e"
+      }
+    },
+    {
+      "name": "keyword.operator.alignof",
+      "scope": ["keyword.operator.alignof"],
+      "settings": {
+        "foreground": "#d1c10e"
+      }
+    },
+    {
+      "name": "keyword.operator.type",
+      "scope": ["keyword.operator.type"],
+      "settings": {
+        "foreground": "#d1c10e"
+      }
+    },
+    {
+      "name": "keyword.operator.logical",
+      "scope": ["keyword.operator.logical"],
+      "settings": {
+        "foreground": "#d1c10e"
+      }
+    },
+    {
+      "name": "keyword.operator.bitwise",
+      "scope": ["keyword.operator.bitwise"],
+      "settings": {
+        "foreground": "#d1c10e"
+      }
+    },
+    {
+      "name": "keyword.operator.increment",
+      "scope": ["keyword.operator.increment"],
+      "settings": {
+        "foreground": "#d1c10e"
+      }
+    },
+    {
+      "name": "keyword.operator.decrement",
+      "scope": ["keyword.operator.decrement"],
+      "settings": {
+        "foreground": "#d1c10e"
+      }
+    },
+    {
+      "name": "keyword.operator.assignment",
+      "scope": ["keyword.operator.assignment"]
     }
   ]
 }
