@@ -11,120 +11,39 @@
   },
   "tokenColors": [
     {
-      "name": "character",
-      "scope": ["character"],
+      "name": "comment",
+      "scope": ["comment"],
       "settings": {
-        "foreground": "#C792EA"
+        "foreground": "#0e9c26"
       }
     },
     {
-      "name": "type",
-      "scope": ["type"],
+      "name": "string",
+      "scope": ["string"],
       "settings": {
-        "foreground": "#d1c10e"
-      }
-    },
-    {
-      "name": "expressions",
-      "scope": ["expressions"],
-      "settings": {
-        "foreground": "#3f9afb"
+        "foreground": "#ffa557"
       }
     },
     {
       "name": "identifier",
-      "scope": ["identifier"],
+      "scope": ["storage.type.ddlbx"],
       "settings": {
-        "foreground": "#66D7D1"
+        "foreground": "#57beff"
       }
     },
     {
-      "name": "keyword",
-      "scope": ["keyword"],
+      "name": "constructor_inline",
+      "scope": ["storage.type.list.ddlbx"],
       "settings": {
-        "foreground": "#d1c10e"
+        "foreground": "#19d47a"
       }
     },
     {
-      "name": "keyword.operator",
-      "scope": ["keyword.operator"],
+      "name":"variable",
+      "scope": ["variable.name.ddlbx"],
       "settings": {
-        "foreground": "#d1c10e"
+        "foreground": "#ff8cf4"
       }
-    },
-    {
-      "name": "keyword.operator.new",
-      "scope": ["keyword.operator.new"],
-      "settings": {
-        "foreground": "#d1c10e"
-      }
-    },
-    {
-      "name": "keyword.operator.expression",
-      "scope": ["keyword.operator.expression"],
-      "settings": {
-        "foreground": "#d1c10e"
-      }
-    },
-    {
-      "name": "keyword.operator.cast",
-      "scope": ["keyword.operator.cast"],
-      "settings": {
-        "foreground": "#d1c10e"
-      }
-    },
-    {
-      "name": "keyword.operator.sizeof",
-      "scope": ["keyword.operator.sizeof"],
-      "settings": {
-        "foreground": "#d1c10e"
-      }
-    },
-    {
-      "name": "keyword.operator.alignof",
-      "scope": ["keyword.operator.alignof"],
-      "settings": {
-        "foreground": "#d1c10e"
-      }
-    },
-    {
-      "name": "keyword.operator.type",
-      "scope": ["keyword.operator.type"],
-      "settings": {
-        "foreground": "#d1c10e"
-      }
-    },
-    {
-      "name": "keyword.operator.logical",
-      "scope": ["keyword.operator.logical"],
-      "settings": {
-        "foreground": "#d1c10e"
-      }
-    },
-    {
-      "name": "keyword.operator.bitwise",
-      "scope": ["keyword.operator.bitwise"],
-      "settings": {
-        "foreground": "#d1c10e"
-      }
-    },
-    {
-      "name": "keyword.operator.increment",
-      "scope": ["keyword.operator.increment"],
-      "settings": {
-        "foreground": "#d1c10e"
-      }
-    },
-    {
-      "name": "keyword.operator.decrement",
-      "scope": ["keyword.operator.decrement"],
-      "settings": {
-        "foreground": "#d1c10e"
-      }
-    },
-    {
-      "name": "keyword.operator.assignment",
-      "scope": ["keyword.operator.assignment"]
     }
   ]
 }
