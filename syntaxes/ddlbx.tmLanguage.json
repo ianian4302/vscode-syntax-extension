@@ -1,77 +1,138 @@
 {
   "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
   "name": "DDLBX",
+  "scopeName": "source.ddlbx",
   "patterns": [
     {
-      "name": "character",
-      "begin": "\\'",
-      "end": "\\'",
-      "patterns": [
-        {
-          "include": "#letter"
-        },
-        {
-          "include": "#digit"
-        },
-        {
-          "include": "#symbol"
-        }
-      ]
+      "include": "#comment"
     },
     {
-      "name": "identifier",
-      "match": "\\b(Int|Flo|Str|Boo|Reg|List)\\b"
+      "include": "#variable_declaration"
     },
     {
-      "name": "expressions",
-      "begin": "\\b(\\{)\\b",
-      "end": "\\b(\\})\\b",
-      "patterns": [
-        {
-          "include": "#operator"
-        },
-        {
-          "include": "expression"
-        }
-      ]
+      "include": "#type"
     },
-
-    { "include": "#type" }
+    {
+      "include": "#type_with_variable"
+    },
+    {
+      "include": "#type_List"
+    },
+    {
+      "include": "#string"
+    },
+    {
+      "include": "#symbol"
+    }
   ],
   "repository": {
-    "letter": {
-      "name": "letter",
-      "match": "\\b([a-zA-Z])\\b"
-    },
-    "digit": {
-      "name": "digit",
-      "match": "\\b([0-9])\\b"
-    },
-    "symbol": {
-      "name": "symbol",
-      "match": "\\b([!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?~]+)\\b"
-    },
-    "operator": {
-      "name": "operator",
-      "match": "\\s*+(\\/\\*)((?:[^\\*]++|\\*+(?!\\/))*+(\\*\\/))\\s*+"
-    },
-    "expression": {
-      "name": "expression",
-      "begin": "\\b(\\{)\\b",
-      "end": "\\b(\\})\\b",
+    "comment": {
       "patterns": [
         {
-          "include": "#operator"
+          "match": "//.*$",
+          "name": "comment.line.double-slash.ddlbx"
         },
         {
-          "include": "expression"
+          "begin": "/\\*",
+          "end": "\\*/",
+          "name": "comment.block.ddlbx"
+        }
+      ]
+    },
+    "digit": {
+      "patterns": [
+        {
+          "match": "\\b[0-9]+\\b",
+          "name": "constant.numeric.integer.ddlbx"
+        }
+      ]
+    },
+    "letter": {
+      "patterns": [
+        {
+          "match": "\\b[a-zA-Z]+\\b",
+          "name": "constant.character.ddlbx"
+        }
+      ]
+    },
+    "string": {
+      "patterns": [
+        {
+          "begin": "'",
+          "end": "'",
+          "name": "string.quoted.double.ddlbx",
+          "patterns": [
+            {
+              "match": "\\\\(?:[\"\\\\/bfnrt]|u[0-9a-fA-F]{4}|U[0-9a-fA-F]{8})",
+              "name": "constant.character.escape.ddlbx"
+            }
+          ]
         }
       ]
     },
     "type": {
-      "name": "type",
-      "match": "\\b(Int|Flo|Str|Boo|Reg|List)\\b"
+      "patterns": [
+        {
+          "match": "\\b(?:Int|Str|Flt|Boo|Reg)\\b",
+          "name": "storage.type.ddlbx"
+        }
+      ]
+    },
+    "type_List": {
+      "patterns": [
+        {
+          "match": "\\b(List)\\b",
+          "name": "storage.type.list.ddlbx"
+        },
+        {
+          "begin": "<",
+          "end": ">",
+          "name": "meta.type.ddlbx",
+          "patterns": [
+            {
+              "include": "#type"
+            },
+            {
+              "include": "$self"
+            }
+          ]
+        }
+      ]
+    },
+    "variable": {
+      "patterns": [
+        {
+          "match": "(?<!\\w)(?:[a-zA-Z_]|(?:\\\\u[0-9a-fA-F]{4}|\\\\U[0-9a-fA-F]{8}))(?:[a-zA-Z0-9_]|(?:\\\\u[0-9a-fA-F]{4}|\\\\U[0-9a-fA-F]{8}))*(?!\\w)",
+          "name": "variable.parameter.ddlbx"
+        },
+        {
+          "match": ",",
+          "name": "punctuation.cpp"
+        }
+      ]
+    },
+    "type_with_variable": {
+      "patterns": [
+        {
+          "include": "#type",
+          "patterns": [
+            {
+              "include": "#variable"
+            }
+          ]
+        }
+      ]
+    },
+    "variable_declaration": {
+      "patterns": [
+        {
+          "match": "\\b(Int|Str|Flt|Boo|Reg|List)\\b\\s+([a-zA-Z_][a-zA-Z0-9_]*)",
+          "captures": {
+            "1": { "name": "storage.type.ddlbx" },
+            "2": { "name": "variable.name.ddlbx" }
+          }
+        }
+      ]
     }
-  },
-  "scopeName": "source.ddlbx"
+  }
 }
