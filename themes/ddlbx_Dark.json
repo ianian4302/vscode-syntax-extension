@@ -39,10 +39,38 @@
       }
     },
     {
-      "name":"variable",
+      "name": "variable",
       "scope": ["variable.name.ddlbx"],
       "settings": {
         "foreground": "#ff8cf4"
+      }
+    },
+    {
+      "name": "endCaptrues",
+      "scope": ["keyword.control.ddlbx"],
+      "settings": {
+        "foreground": "#753c67"
+      }
+    },
+    {
+      "name": "while_loop",
+      "scope": ["keyword.control.loop.ddlbx"],
+      "settings": {
+        "foreground": "#65c98b"
+      }
+    },
+    {
+      "name": "keyword_operator_comparison",
+      "scope": ["keyword.operator"],
+      "settings": {
+        "foreground": "#ffd138"
+      }
+    },
+    {
+      "name": "keyword",
+      "scope": ["keyword.ddlbx"],
+      "settings": {
+        "foreground": "#0a80c4"
       }
     }
   ]
