@@ -29,20 +29,13 @@
       {
         "language": "ddlbx",
         "scopeName": "source.ddlbx",
-        "path": "./syntaxes/ddlbx.tmLanguage.json"
+        "path": "./syntaxes/tests.tmLanguage.json"
       }
     ],
     "commands": [
       {
         "command": "ddlbx-extension.helloWorld",
         "title": "Hello World"
-      }
-    ],
-    "themes": [
-      {
-        "label": "ddlbx-theme-Dark",
-        "uiTheme": "vs-dark",
-        "path": "./themes/ddlbx_Dark.json"
       }
     ]
   },

@@ -1,0 +1,92 @@
+{
+    "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+    "name": "DDLBX",
+    "scopeName": "source.ddlbx",
+    "patterns": [
+        {
+            "include": "#commet"
+        },
+        {
+            "include": "#function"
+        }
+    ],
+    "repository": {
+        "commet": {
+            "patterns": [
+                {
+                    "match": "//.*$",
+                    "name": "comment.line.double-slash"
+                }
+            ]
+        },
+        "function": {
+            "patterns": [
+                {
+                    "begin": "\\bfun\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s*\\(\\)\\s*:\\s*(Int|Str|Flt|Boo|Reg)\\s*\\{",
+                    "beginCaptures": {
+                        "0": { "name": "keyword.other" },
+                        "1": { "name": "entity.name.function" },
+                        "2": { "name": "support.type" }
+                    },
+                    "end": "\\}",
+                    "endCaptures": {
+                        "0": { "name": "keyword.other" }
+                    },
+                    "name": "meta.function",
+                    "patterns": [
+                        {
+                            "include": "#type_declaration"
+                        }
+                    ]
+                }
+            ]
+        },
+        "function_body": {
+            "patterns": [
+                {
+                    "include": "#type_declaration"
+                },
+                {
+                    "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\b",
+                    "name": "meta.function-body"
+                }
+            ]
+        },
+        "function_definition": {
+            "patterns": [
+                {
+                    "include": "#function"
+                },
+                {
+                    "match": "\\b(Int|Str|Flt|Boo|Reg|Non)\\b",
+                    "name": "storage.type"
+                }
+            ]
+        },
+        "type": {
+            "patterns": [
+                {
+                    "begin": "\\b(Int|Str|Flt|Boo|Reg|Non)\\b",
+                    "end": "(?=[^\\s])",
+                    "name": "storage.type",
+                    "captures": {
+                        "0": { "name": "storage.type" }
+                    }
+                }
+            ]
+        },
+        "type_declaration": {
+            "patterns": [
+                {
+                    "match": "\\b(Int|Str|Flt|Boo|Reg|Non)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s*!|\\b(Int|Str|Flt|Boo|Reg|Non)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s*=\\s*[^!]+!",
+                    "captures": {
+                        "1": { "name": "storage.type" },
+                        "2": { "name": "variable.name" },
+                        "3": { "name": "storage.type" },
+                        "4": { "name": "variable.name" }
+                    }
+                }
+            ]
+        }
+    }
+}
