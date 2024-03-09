@@ -1,0 +1,13 @@
+obj Test {
+    a: Int,
+    b: Int
+}
+
+obj Test1 {
+    a: Test,
+    b: Test
+}
+
+fun main(): Non {
+    var t = Test1(Test(1, 2), Test(3, 4))!
+}
