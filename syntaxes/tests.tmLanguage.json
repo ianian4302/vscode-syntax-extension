@@ -7,7 +7,7 @@
             "include": "#commet"
         },
         {
-            "include": "#function"
+            "include": "#function_define"
         }
     ],
     "repository": {
@@ -19,47 +19,77 @@
                 }
             ]
         },
-        "function": {
+        "function_define": {
             "patterns": [
                 {
-                    "begin": "\\bfun\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s*\\(\\)\\s*:\\s*(Int|Str|Flt|Boo|Reg)\\s*\\{",
+                    "begin": "\\bfun\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s*\\((.*?)\\)\\s*:\\s*(Int|Str|Flt|Boo|Reg)\\s*\\{",
                     "beginCaptures": {
                         "0": { "name": "keyword.other" },
                         "1": { "name": "entity.name.function" },
-                        "2": { "name": "support.type" }
+                        "2": {
+                            "patterns": [
+                                {
+                                    "include": "#function_arguments"
+                                }
+                            ]
+                        },
+                        "3": { "name": "support.type" }
                     },
                     "end": "\\}",
                     "endCaptures": {
                         "0": { "name": "keyword.other" }
                     },
-                    "name": "meta.function",
                     "patterns": [
                         {
-                            "include": "#type_declaration"
-                        }
+                            "include": "#function_arguments"
+                        },
+                        {
+                            "include": "#commet"
+                        },
+                        {
+                            "include": "#custom_structure_list"
+                        },
+                        { "include": "#variable" }
                     ]
                 }
             ]
         },
-        "function_body": {
+        "function_arguments": {
             "patterns": [
                 {
-                    "include": "#type_declaration"
-                },
-                {
-                    "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\b",
-                    "name": "meta.function-body"
+                    "match": "\\b(Int|Str|Flt|Boo|Reg)\\s+([a-zA-Z_][a-zA-Z0-9_]*)",
+                    "captures": {
+                        "1": { "name": "storage.type" },
+                        "2": { "name": "variable.function_arguments" }
+                    }
                 }
             ]
         },
-        "function_definition": {
+        "custom_structure_list": {
             "patterns": [
                 {
-                    "include": "#function"
-                },
-                {
-                    "match": "\\b(Int|Str|Flt|Boo|Reg|Non)\\b",
-                    "name": "storage.type"
+                    "begin": "List",
+                    "end": ">",
+                    "beginCaptures": {
+                        "0": { "name": "support.class" }
+                    },
+                    "patterns": [
+                        {
+                            "match": "<",
+                            "name": "punctuation.definition.type.begin"
+                        },
+                        {
+                            "match": ">",
+                            "name": "punctuation.definition.type.end"
+                        },
+                        {
+                            "include": "#custom_structure_list"
+                        },
+                        {
+                            "match": "\\b(Int|Str|Flt|Boo|Reg|Non)\\b",
+                            "name": "storage.type"
+                        }
+                    ]
                 }
             ]
         },
@@ -85,6 +115,294 @@
                         "3": { "name": "storage.type" },
                         "4": { "name": "variable.name" }
                     }
+                }
+            ]
+        },
+        "operators": {
+            "patterns": [
+                {
+                    "begin": "((?<!\\w)sizeof(?!\\w))((?:(?:(?:\\s*+(\\/\\*)((?:[^\\*]++|\\*+(?!\\/))*+(\\*\\/))\\s*+)+)|(?:\\s++)|(?<=\\W)|(?=\\W)|^|(?:\\n?$)|\\A|\\Z))(\\()",
+                    "end": "\\)",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "keyword.operator.functionlike.ddlbx keyword.operator.sizeof.ddlbx"
+                        },
+                        "2": {
+                            "patterns": [
+                                {
+                                    "include": "#inline_comment"
+                                }
+                            ]
+                        },
+                        "3": {
+                            "name": "comment.block.ddlbx punctuation.definition.comment.begin.ddlbx"
+                        },
+                        "4": {
+                            "name": "comment.block.ddlbx"
+                        },
+                        "5": {
+                            "name": "comment.block.ddlbx punctuation.definition.comment.end.ddlbx"
+                        },
+                        "6": {
+                            "name": "punctuation.section.arguments.begin.bracket.round.operator.sizeof.ddlbx"
+                        }
+                    },
+                    "endCaptures": {
+                        "0": {
+                            "name": "punctuation.section.arguments.end.bracket.round.operator.sizeof.ddlbx"
+                        }
+                    },
+                    "contentName": "meta.arguments.operator.sizeof",
+                    "patterns": [
+                        {
+                            "include": "#evaluation_context"
+                        }
+                    ]
+                },
+                {
+                    "begin": "((?<!\\w)alignof(?!\\w))((?:(?:(?:\\s*+(\\/\\*)((?:[^\\*]++|\\*+(?!\\/))*+(\\*\\/))\\s*+)+)|(?:\\s++)|(?<=\\W)|(?=\\W)|^|(?:\\n?$)|\\A|\\Z))(\\()",
+                    "end": "\\)",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "keyword.operator.functionlike.ddlbx keyword.operator.alignof.ddlbx"
+                        },
+                        "2": {
+                            "patterns": [
+                                {
+                                    "include": "#inline_comment"
+                                }
+                            ]
+                        },
+                        "3": {
+                            "name": "comment.block.ddlbx punctuation.definition.comment.begin.ddlbx"
+                        },
+                        "4": {
+                            "name": "comment.block.ddlbx"
+                        },
+                        "5": {
+                            "name": "comment.block.ddlbx punctuation.definition.comment.end.ddlbx"
+                        },
+                        "6": {
+                            "name": "punctuation.section.arguments.begin.bracket.round.operator.alignof.ddlbx"
+                        }
+                    },
+                    "endCaptures": {
+                        "0": {
+                            "name": "punctuation.section.arguments.end.bracket.round.operator.alignof.ddlbx"
+                        }
+                    },
+                    "contentName": "meta.arguments.operator.alignof",
+                    "patterns": [
+                        {
+                            "include": "#evaluation_context"
+                        }
+                    ]
+                },
+                {
+                    "begin": "((?<!\\w)alignas(?!\\w))((?:(?:(?:\\s*+(\\/\\*)((?:[^\\*]++|\\*+(?!\\/))*+(\\*\\/))\\s*+)+)|(?:\\s++)|(?<=\\W)|(?=\\W)|^|(?:\\n?$)|\\A|\\Z))(\\()",
+                    "end": "\\)",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "keyword.operator.functionlike.ddlbx keyword.operator.alignas.ddlbx"
+                        },
+                        "2": {
+                            "patterns": [
+                                {
+                                    "include": "#inline_comment"
+                                }
+                            ]
+                        },
+                        "3": {
+                            "name": "comment.block.ddlbx punctuation.definition.comment.begin.ddlbx"
+                        },
+                        "4": {
+                            "name": "comment.block.ddlbx"
+                        },
+                        "5": {
+                            "name": "comment.block.ddlbx punctuation.definition.comment.end.ddlbx"
+                        },
+                        "6": {
+                            "name": "punctuation.section.arguments.begin.bracket.round.operator.alignas.ddlbx"
+                        }
+                    },
+                    "endCaptures": {
+                        "0": {
+                            "name": "punctuation.section.arguments.end.bracket.round.operator.alignas.ddlbx"
+                        }
+                    },
+                    "contentName": "meta.arguments.operator.alignas",
+                    "patterns": [
+                        {
+                            "include": "#evaluation_context"
+                        }
+                    ]
+                },
+                {
+                    "begin": "((?<!\\w)typeid(?!\\w))((?:(?:(?:\\s*+(\\/\\*)((?:[^\\*]++|\\*+(?!\\/))*+(\\*\\/))\\s*+)+)|(?:\\s++)|(?<=\\W)|(?=\\W)|^|(?:\\n?$)|\\A|\\Z))(\\()",
+                    "end": "\\)",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "keyword.operator.functionlike.ddlbx keyword.operator.typeid.ddlbx"
+                        },
+                        "2": {
+                            "patterns": [
+                                {
+                                    "include": "#inline_comment"
+                                }
+                            ]
+                        },
+                        "3": {
+                            "name": "comment.block.ddlbx punctuation.definition.comment.begin.ddlbx"
+                        },
+                        "4": {
+                            "name": "comment.block.ddlbx"
+                        },
+                        "5": {
+                            "name": "comment.block.ddlbx punctuation.definition.comment.end.ddlbx"
+                        },
+                        "6": {
+                            "name": "punctuation.section.arguments.begin.bracket.round.operator.typeid.ddlbx"
+                        }
+                    },
+                    "endCaptures": {
+                        "0": {
+                            "name": "punctuation.section.arguments.end.bracket.round.operator.typeid.ddlbx"
+                        }
+                    },
+                    "contentName": "meta.arguments.operator.typeid",
+                    "patterns": [
+                        {
+                            "include": "#evaluation_context"
+                        }
+                    ]
+                },
+                {
+                    "begin": "((?<!\\w)noexcept(?!\\w))((?:(?:(?:\\s*+(\\/\\*)((?:[^\\*]++|\\*+(?!\\/))*+(\\*\\/))\\s*+)+)|(?:\\s++)|(?<=\\W)|(?=\\W)|^|(?:\\n?$)|\\A|\\Z))(\\()",
+                    "end": "\\)",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "keyword.operator.functionlike.ddlbx keyword.operator.noexcept.ddlbx"
+                        },
+                        "2": {
+                            "patterns": [
+                                {
+                                    "include": "#inline_comment"
+                                }
+                            ]
+                        },
+                        "3": {
+                            "name": "comment.block.ddlbx punctuation.definition.comment.begin.ddlbx"
+                        },
+                        "4": {
+                            "name": "comment.block.ddlbx"
+                        },
+                        "5": {
+                            "name": "comment.block.ddlbx punctuation.definition.comment.end.ddlbx"
+                        },
+                        "6": {
+                            "name": "punctuation.section.arguments.begin.bracket.round.operator.noexcept.ddlbx"
+                        }
+                    },
+                    "endCaptures": {
+                        "0": {
+                            "name": "punctuation.section.arguments.end.bracket.round.operator.noexcept.ddlbx"
+                        }
+                    },
+                    "contentName": "meta.arguments.operator.noexcept",
+                    "patterns": [
+                        {
+                            "include": "#evaluation_context"
+                        }
+                    ]
+                },
+                {
+                    "begin": "(\\bsizeof\\.\\.\\.)((?:(?:(?:\\s*+(\\/\\*)((?:[^\\*]++|\\*+(?!\\/))*+(\\*\\/))\\s*+)+)|(?:\\s++)|(?<=\\W)|(?=\\W)|^|(?:\\n?$)|\\A|\\Z))(\\()",
+                    "end": "\\)",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "keyword.operator.functionlike.ddlbx keyword.operator.sizeof.variadic.ddlbx"
+                        },
+                        "2": {
+                            "patterns": [
+                                {
+                                    "include": "#inline_comment"
+                                }
+                            ]
+                        },
+                        "3": {
+                            "name": "comment.block.ddlbx punctuation.definition.comment.begin.ddlbx"
+                        },
+                        "4": {
+                            "name": "comment.block.ddlbx"
+                        },
+                        "5": {
+                            "name": "comment.block.ddlbx punctuation.definition.comment.end.ddlbx"
+                        },
+                        "6": {
+                            "name": "punctuation.section.arguments.begin.bracket.round.operator.sizeof.variadic.ddlbx"
+                        }
+                    },
+                    "endCaptures": {
+                        "0": {
+                            "name": "punctuation.section.arguments.end.bracket.round.operator.sizeof.variadic.ddlbx"
+                        }
+                    },
+                    "contentName": "meta.arguments.operator.sizeof.variadic",
+                    "patterns": [
+                        {
+                            "include": "#evaluation_context"
+                        }
+                    ]
+                },
+                {
+                    "match": "--",
+                    "name": "keyword.operator.decrement.ddlbx"
+                },
+                {
+                    "match": "\\+\\+",
+                    "name": "keyword.operator.increment.ddlbx"
+                },
+                {
+                    "match": "%=|\\+=|-=|\\*=|(?<!\\()\\/=",
+                    "name": "keyword.operator.assignment.compound.ddlbx"
+                },
+                {
+                    "match": "&=|\\^=|<<=|>>=|\\|=",
+                    "name": "keyword.operator.assignment.compound.bitwise.ddlbx"
+                },
+                {
+                    "match": "<<|>>",
+                    "name": "keyword.operator.bitwise.shift.ddlbx"
+                },
+                {
+                    "match": "!=|<=|>=|==|<|>",
+                    "name": "keyword.operator.comparison.ddlbx"
+                },
+                {
+                    "match": "&&|!|\\|\\|",
+                    "name": "keyword.operator.logical.ddlbx"
+                },
+                {
+                    "match": "&|\\||\\^|~",
+                    "name": "keyword.operator.bitwise.ddlbx"
+                },
+                {
+                    "include": "#assignment_operator"
+                },
+                {
+                    "match": "%|\\*|\\/|-|\\+",
+                    "name": "keyword.operator.arithmetic.ddlbx"
+                },
+                {
+                    "include": "#ternary_operator"
+                }
+            ]
+        },
+        "variable": {
+            "patterns": [
+                {
+                    "match": "\\b([a-zA-Z_][a-zA-Z0-9_]*)\\b",
+                    "name": "variable.other"
                 }
             ]
         }
