@@ -1,63 +1,64 @@
 {
-  "name": "ddlbx-extension",
-  "displayName": "DDLBX extension",
-  "description": "extension for ddlbx",
-  "version": "0.0.1",
-  "engines": {
-    "vscode": "^1.85.0"
-  },
-  "categories": [
-    "Other"
-  ],
-  "activationEvents": [],
-  "main": "./out/extension.js",
-  "contributes": {
-    "languages": [
-      {
-        "id": "ddlbx",
-        "aliases": [
-          "DDLBX",
-          "ddlbx"
-        ],
-        "extensions": [
-          ".ddlbx"
-        ],
-        "configuration": "./language-configuration.json"
-      }
+    "name": "ddlbx-extension",
+    "displayName": "DDLBX extension",
+    "description": "extension for ddlbx",
+    "version": "0.0.4",
+    "engines": {
+        "vscode": "^1.85.0"
+    },
+    "categories": [
+        "Other"
     ],
-    "grammars": [
-      {
-        "language": "ddlbx",
-        "scopeName": "source.ddlbx",
-        "path": "./syntaxes/tests.tmLanguage.json"
-      }
-    ],
-    "commands": [
-      {
-        "command": "ddlbx-extension.helloWorld",
-        "title": "Hello World"
-      }
-    ]
-  },
-  "scripts": {
-    "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
-    "pretest": "npm run compile && npm run lint",
-    "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js"
-  },
-  "devDependencies": {
-    "@types/mocha": "^10.0.3",
-    "@types/node": "18.x",
-    "@types/vscode": "^1.85.0",
-    "@typescript-eslint/eslint-plugin": "^6.9.0",
-    "@typescript-eslint/parser": "^6.9.0",
-    "@vscode/test-electron": "^2.3.6",
-    "eslint": "^8.52.0",
-    "glob": "^10.3.10",
-    "js-yaml": "^4.1.0",
-    "mocha": "^10.2.0",
-    "typescript": "^5.2.2"
-  }
+    "publisher": "ianian4302",
+    "activationEvents": [],
+    "main": "./out/extension.js",
+    "contributes": {
+        "languages": [
+            {
+                "id": "ddlbx",
+                "aliases": [
+                    "DDLBX",
+                    "ddlbx"
+                ],
+                "extensions": [
+                    ".ddlbx"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "ddlbx",
+                "scopeName": "source.ddlbx",
+                "path": "./syntaxes/ddlbx.tmLanguage.json"
+            }
+        ],
+        "commands": [
+            {
+                "command": "ddlbx-extension.helloWorld",
+                "title": "Hello World"
+            }
+        ]
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "pretest": "npm run compile && npm run lint",
+        "lint": "eslint src --ext ts",
+        "test": "node ./out/test/runTest.js"
+    },
+    "devDependencies": {
+        "@types/mocha": "^10.0.3",
+        "@types/node": "18.x",
+        "@types/vscode": "^1.85.0",
+        "@typescript-eslint/eslint-plugin": "^6.9.0",
+        "@typescript-eslint/parser": "^6.9.0",
+        "@vscode/test-electron": "^2.3.6",
+        "eslint": "^8.52.0",
+        "glob": "^10.3.10",
+        "js-yaml": "^4.1.0",
+        "mocha": "^10.2.0",
+        "typescript": "^5.2.2"
+    }
 }
