@@ -3,196 +3,276 @@
     "name": "DDLBX",
     "scopeName": "source.ddlbx",
     "patterns": [
-        {
-            "include": "#comment"
-        },
-        {
-            "include": "#entity"
-        },
-        {
-            "include": "#endCaptures"
-        },
-        {
-            "include": "#operators"
-        },
-        {
-            "include": "#keyword"
-        },
-        {
-            "include": "#variable_declaration"
-        },
-        {
-            "include": "#type"
-        },
-        {
-            "include": "#type_with_variable"
-        },
-        {
-            "include": "#type_List"
-        },
-        {
-            "include": "#string"
-        },
-        {
-            "include": "#symbol"
-        },
-        {
-            "include": "#while_loop"
-        },
-        {
-            "include": "#function_definition"
-        }
+        { "include": "#commet" },
+        { "include": "#keyword_define" },
+        { "include": "#function_define" },
+        { "include": "#type" },
+        { "include": "#custom_structure_object" }
     ],
     "repository": {
-        "entity": {
-            "patterns": [
-                {
-                    "match": "(?<!\\w)(?:[a-zA-Z_]|(?:\\\\u[0-9a-fA-F]{4}|\\\\U[0-9a-fA-F]{8}))(?:[a-zA-Z0-9_]|(?:\\\\u[0-9a-fA-F]{4}|\\\\U[0-9a-fA-F]{8}))*(?!\\w)(?=::)",
-                    "name": "entity.name.namespace.ddlbx"
-                }
-            ]
-        },
-        "endCaptures": {
-            "patterns": [
-                {
-                    "match": "!",
-                    "name": "keyword.control.ddlbx"
-                }
-            ]
-        },
-        "comment": {
+        "commet": {
             "patterns": [
                 {
                     "match": "//.*$",
-                    "name": "comment.line.double-slash.ddlbx"
+                    "name": "comment.line.double-slash"
+                }
+            ]
+        },
+        "keyword_define": {
+            "patterns": [
+                {
+                    "match": "\\bret\\b",
+                    "name": "keyword.control"
+                }
+            ]
+        },
+        "function_define": {
+            "patterns": [
+                {
+                    "begin": "\\bfun\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s*\\((.*?)\\)\\s*:\\s*(Int|Str|Flt|Boo|Reg|Non|var|s*)\\s*\\{",
+                    "beginCaptures": {
+                        "0": { "name": "keyword.other" },
+                        "1": { "name": "entity.name.function" },
+                        "2": {
+                            "patterns": [
+                                {
+                                    "include": "#function_paremeter_define"
+                                }
+                            ]
+                        },
+                        "3": { "name": "support.type" }
+                    },
+                    "end": "\\}",
+                    "endCaptures": {
+                        "0": { "name": "keyword.other" }
+                    },
+                    "patterns": [{ "include": "#function_statement_define" }]
+                }
+            ]
+        },
+        "function_arguments": {
+            "patterns": [
+                {
+                    "match": "\\b(Int|Str|Flt|Boo|Reg|var)\\s+([a-zA-Z_][a-zA-Z0-9_]*)",
+                    "captures": {
+                        "1": { "name": "storage.type" },
+                        "2": { "name": "variable.function_arguments" }
+                    }
+                }
+            ]
+        },
+        "function_statement_define": {
+            "patterns": [
+                { "include": "#string_context" },
+                { "include": "#keyword_define" },
+                { "include": "#loop_declaration" },
+                { "include": "#custom_structure_println" },
+                { "include": "#function_call_define" },
+                { "include": "#function_arguments" },
+                { "include": "#commet" },
+                { "include": "#custom_structure_list" },
+                { "include": "#variable" },
+                { "include": "#number_literal" }
+            ]
+        },
+        "function_paremeter_define": {
+            "patterns": [
+                {
+                    "match": "(\\w+\\s*:\\s*(Int|Str|Flt|Boo|Reg|Non|var))",
+                    "captures": {
+                        "1": { "name": "variable.function_parameter" },
+                        "2": { "name": "support.type.function_parameter" }
+                    }
+                }
+            ]
+        },
+        "function_call_define": {
+            "patterns": [
+                {
+                    "match": "\\b([a-zA-Z_][a-zA-Z0-9_]*)\\s*\\(\\s*\\)\\s*",
+                    "captures": {
+                        "1": { "name": "entity.name.function" },
+                        "2": {
+                            "patterns": [{ "include": "#function_call_define" }]
+                        }
+                    }
                 },
                 {
-                    "begin": "/\\*",
-                    "end": "\\*/",
-                    "name": "comment.block.ddlbx"
+                    "match": "\\b([a-zA-Z_][a-zA-Z0-9_]*)\\s*\\(\\s*((?:\\w+\\s*,\\s*)*\\w+)?\\s*\\)\\s*",
+                    "captures": {
+                        "1": { "name": "entity.name.function" },
+                        "2": {
+                            "patterns": [
+                                { "include": "#function_call_parameter_define" }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "begin": "\\b([a-zA-Z_][a-zA-Z0-9_]*)\\s*\\(\\s*",
+                    "beginCaptures": {
+                        "1": { "name": "entity.name.function" }
+                    },
+                    "end": "\\)",
+                    "endCaptures": {
+                        "0": { "name": "punctuation.definition.arguments.end" }
+                    },
+                    "patterns": [
+                        { "include": "#function_call_parameter_define" }
+                    ]
                 }
             ]
         },
-        "keyword": {
+        "function_call_parameter_define": {
             "patterns": [
-                {
-                    "match": "\\b(?:if|else|return|break|default|goto|true|false|maybe)\\b",
-                    "name": "keyword.ddlbx"
-                }
+                { "include": "#function_call_define" },
+                { "include": "#variable" },
+                { "include": "#number_literal" }
             ]
         },
-        "digit": {
+        "custom_structure_list": {
             "patterns": [
                 {
-                    "match": "\\b[0-9]+\\b",
-                    "name": "constant.numeric.integer.ddlbx"
-                }
-            ]
-        },
-        "letter": {
-            "patterns": [
-                {
-                    "match": "\\b[a-zA-Z]+\\b",
-                    "name": "constant.character.ddlbx"
-                }
-            ]
-        },
-        "string": {
-            "patterns": [
-                {
-                    "begin": "'",
-                    "end": "'",
-                    "name": "string.quoted.double.ddlbx",
+                    "begin": "List",
+                    "end": ">",
+                    "beginCaptures": {
+                        "0": { "name": "support.class" }
+                    },
                     "patterns": [
                         {
-                            "match": "\\\\(?:[\"\\\\/bfnrt]|u[0-9a-fA-F]{4}|U[0-9a-fA-F]{8})",
-                            "name": "constant.character.escape.ddlbx"
+                            "match": "<",
+                            "name": "punctuation.definition.type.begin"
+                        },
+                        {
+                            "match": ">",
+                            "name": "punctuation.definition.type.end"
+                        },
+                        {
+                            "include": "#custom_structure_list"
+                        },
+                        {
+                            "match": "\\b(Int|Str|Flt|Boo|Reg|Non|var)\\b",
+                            "name": "storage.type"
                         }
                     ]
+                }
+            ]
+        },
+        "custom_structure_println": {
+            "patterns": [
+                {
+                    "match": "println\\s*\\((.*?)\\)",
+                    "name": "entity.name.function.call",
+                    "captures": {
+                        "1": {
+                            "patterns": [
+                                { "include": "#string_context" },
+                                { "include": "#function_call_parameter_define" }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        "custom_structure_object": {
+            "patterns": [
+                {
+                    "name": "keyword.other.ddlbx",
+                    "match": "\\b(obj)\\b"
+                },
+                {
+                    "name": "entity.name.type.ddlbx",
+                    "match": "\\b([A-Z]\\w*)\\b"
+                },
+                {
+                    "begin": "\\{",
+                    "end": "\\}",
+                    "name": "meta.struct.ddlbx",
+                    "patterns": [
+                        {
+                            "include": "#keyvaluepair"
+                        }
+                    ]
+                },
+                {
+                    "name": "variable.ddlbx",
+                    "match": "\\b[a-z]\\w*\\b"
+                },
+                {
+                    "name": "keyword.operator.ddlbx",
+                    "match": ":"
+                },
+                {
+                    "name": "constant.numeric.ddlbx",
+                    "match": "\\b(Int|String|Bool|Float)\\b"
+                },
+                {
+                    "name": "string.quoted.double.ddlbx",
+                    "begin": "\"",
+                    "end": "\"",
+                    "patterns": [
+                        {
+                            "include": "#escape"
+                        }
+                    ]
+                },
+                {
+                    "name": "string.quoted.single.ddlbx",
+                    "begin": "'",
+                    "end": "'",
+                    "patterns": [
+                        {
+                            "include": "#escape"
+                        }
+                    ]
+                },
+                {
+                    "repository": {
+                        "keyvaluepair": {
+                            "patterns": [
+                                {
+                                    "name": "meta.keyvaluepair.ddlbx",
+                                    "match": "\\b([a-zA-Z]\\w*)\\s*:\\s*([a-zA-Z]\\w*)\\b"
+                                }
+                            ]
+                        },
+                        "escape": {
+                            "patterns": [
+                                {
+                                    "name": "constant.character.escape.ddlbx",
+                                    "match": "\\\\."
+                                }
+                            ]
+                        }
+                    }
                 }
             ]
         },
         "type": {
             "patterns": [
                 {
-                    "match": "\\b(?:Int|Str|Flt|Boo|Reg)\\b",
-                    "name": "storage.type.ddlbx"
-                }
-            ]
-        },
-        "type_List": {
-            "patterns": [
-                {
-                    "match": "\\b(List)\\b",
-                    "name": "storage.type.list.ddlbx"
-                },
-                {
-                    "begin": "<",
-                    "end": ">",
-                    "name": "meta.type.ddlbx",
-                    "patterns": [
-                        {
-                            "include": "#type"
-                        },
-                        {
-                            "include": "$self"
-                        }
-                    ]
-                }
-            ]
-        },
-        "variable": {
-            "patterns": [
-                {
-                    "match": "(?<!\\w)(?:[a-zA-Z_]|(?:\\\\u[0-9a-fA-F]{4}|\\\\U[0-9a-fA-F]{8}))(?:[a-zA-Z0-9_]|(?:\\\\u[0-9a-fA-F]{4}|\\\\U[0-9a-fA-F]{8}))*(?!\\w)",
-                    "name": "variable.parameter.ddlbx"
-                },
-                {
-                    "match": ",",
-                    "name": "punctuation.ddlbx"
-                }
-            ]
-        },
-        "type_with_variable": {
-            "patterns": [
-                {
-                    "include": "#type",
-                    "patterns": [
-                        {
-                            "include": "#variable"
-                        }
-                    ]
-                }
-            ]
-        },
-        "variable_declaration": {
-            "patterns": [
-                {
-                    "match": "\\b(Int|Str|Flt|Boo|Reg|List)\\b\\s+([a-zA-Z_][a-zA-Z0-9_]*)",
+                    "begin": "\\b(Int|Str|Flt|Boo|Reg|Non|var)\\b",
+                    "end": "(?=[^\\s])",
+                    "name": "storage.type",
                     "captures": {
-                        "1": { "name": "storage.type.ddlbx" },
-                        "2": { "name": "variable.name.ddlbx" }
+                        "0": { "name": "storage.type" }
                     }
                 }
             ]
         },
-        "while_loop": {
+        "type_declaration": {
             "patterns": [
                 {
-                    "match": "\\bwhile\\s*\\(",
-                    "name": "keyword.control.loop.ddlbx"
+                    "match": "\\b(Int|Str|Flt|Boo|Reg|Non|var)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s*!|\\b(Int|Str|Flt|Boo|Reg|Non|var)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s*=\\s*[^!]+!",
+                    "captures": {
+                        "1": { "name": "storage.type" },
+                        "2": { "name": "variable.name" },
+                        "3": { "name": "storage.type" },
+                        "4": { "name": "variable.name" }
+                    }
                 }
             ]
         },
-        "function_definition": {
-            "patterns": [
-                {
-                    "match": "\\bfun\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s*\\(",
-                    "1": { "name": "entity.name.function.ddlbx" }
-                }
-            ]
-        },
-
         "operators": {
             "patterns": [
                 {
@@ -470,6 +550,355 @@
                 },
                 {
                     "include": "#ternary_operator"
+                }
+            ]
+        },
+        "variable": {
+            "patterns": [
+                {
+                    "match": "\\b([a-zA-Z_][a-zA-Z0-9_]*)\\b",
+                    "name": "variable.other"
+                }
+            ]
+        },
+        "number_literal": {
+            "match": "(?<!\\w)\\.?\\d(?:(?:[0-9a-zA-Z_\\.]|')|(?<=[eEpP])[+-])*",
+            "captures": {
+                "0": {
+                    "patterns": [
+                        {
+                            "begin": "(?=.)",
+                            "end": "$",
+                            "beginCaptures": {},
+                            "endCaptures": {},
+                            "patterns": [
+                                {
+                                    "match": "(\\G0[xX])([0-9a-fA-F](?:[0-9a-fA-F]|((?<=[0-9a-fA-F])'(?=[0-9a-fA-F])))*)?((?:(?<=[0-9a-fA-F])\\.|\\.(?=[0-9a-fA-F])))([0-9a-fA-F](?:[0-9a-fA-F]|((?<=[0-9a-fA-F])'(?=[0-9a-fA-F])))*)?(?:(?<!')([pP])(\\+?)(\\-?)([0-9](?:[0-9]|(?<=[0-9a-fA-F])'(?=[0-9a-fA-F]))*))?([lLfF](?!\\w))?((?:\\w(?<![0-9a-fA-FpP])\\w*)?$)",
+                                    "captures": {
+                                        "1": {
+                                            "name": "keyword.other.unit.hexadecimal.ddlbx"
+                                        },
+                                        "2": {
+                                            "name": "constant.numeric.hexadecimal.ddlbx",
+                                            "patterns": [
+                                                {
+                                                    "match": "(?<=[0-9a-fA-F])'(?=[0-9a-fA-F])",
+                                                    "name": "punctuation.separator.constant.numeric.ddlbx"
+                                                }
+                                            ]
+                                        },
+                                        "3": {
+                                            "name": "punctuation.separator.constant.numeric.ddlbx"
+                                        },
+                                        "4": {
+                                            "name": "constant.numeric.hexadecimal.ddlbx"
+                                        },
+                                        "5": {
+                                            "name": "constant.numeric.hexadecimal.ddlbx",
+                                            "patterns": [
+                                                {
+                                                    "match": "(?<=[0-9a-fA-F])'(?=[0-9a-fA-F])",
+                                                    "name": "punctuation.separator.constant.numeric.ddlbx"
+                                                }
+                                            ]
+                                        },
+                                        "6": {
+                                            "name": "punctuation.separator.constant.numeric.ddlbx"
+                                        },
+                                        "7": {
+                                            "name": "keyword.other.unit.exponent.hexadecimal.ddlbx"
+                                        },
+                                        "8": {
+                                            "name": "keyword.operator.plus.exponent.hexadecimal.ddlbx"
+                                        },
+                                        "9": {
+                                            "name": "keyword.operator.minus.exponent.hexadecimal.ddlbx"
+                                        },
+                                        "10": {
+                                            "name": "constant.numeric.exponent.hexadecimal.ddlbx",
+                                            "patterns": [
+                                                {
+                                                    "match": "(?<=[0-9a-fA-F])'(?=[0-9a-fA-F])",
+                                                    "name": "punctuation.separator.constant.numeric.ddlbx"
+                                                }
+                                            ]
+                                        },
+                                        "11": {
+                                            "name": "keyword.other.suffix.literal.built-in.floating-point.ddlbx keyword.other.unit.suffix.floating-point.ddlbx"
+                                        },
+                                        "12": {
+                                            "name": "keyword.other.suffix.literal.user-defined.integer.ddlbx keyword.other.unit.user-defined.ddlbx"
+                                        }
+                                    }
+                                },
+                                {
+                                    "match": "\\G(?=[0-9.])(?!0[xXbB])([0-9](?:[0-9]|((?<=[0-9a-fA-F])'(?=[0-9a-fA-F])))*)?((?:(?<=[0-9])\\.|\\.(?=[0-9])))([0-9](?:[0-9]|((?<=[0-9a-fA-F])'(?=[0-9a-fA-F])))*)?(?:(?<!')([eE])(\\+?)(\\-?)([0-9](?:[0-9]|(?<=[0-9a-fA-F])'(?=[0-9a-fA-F]))*))?([lLfF](?!\\w))?((?:\\w(?<![0-9eE])\\w*)?$)",
+                                    "captures": {
+                                        "1": {
+                                            "name": "constant.numeric.decimal.ddlbx",
+                                            "patterns": [
+                                                {
+                                                    "match": "(?<=[0-9a-fA-F])'(?=[0-9a-fA-F])",
+                                                    "name": "punctuation.separator.constant.numeric.ddlbx"
+                                                }
+                                            ]
+                                        },
+                                        "2": {
+                                            "name": "punctuation.separator.constant.numeric.ddlbx"
+                                        },
+                                        "3": {
+                                            "name": "constant.numeric.decimal.point.ddlbx"
+                                        },
+                                        "4": {
+                                            "name": "constant.numeric.decimal.ddlbx",
+                                            "patterns": [
+                                                {
+                                                    "match": "(?<=[0-9a-fA-F])'(?=[0-9a-fA-F])",
+                                                    "name": "punctuation.separator.constant.numeric.ddlbx"
+                                                }
+                                            ]
+                                        },
+                                        "5": {
+                                            "name": "punctuation.separator.constant.numeric.ddlbx"
+                                        },
+                                        "6": {
+                                            "name": "keyword.other.unit.exponent.decimal.ddlbx"
+                                        },
+                                        "7": {
+                                            "name": "keyword.operator.plus.exponent.decimal.ddlbx"
+                                        },
+                                        "8": {
+                                            "name": "keyword.operator.minus.exponent.decimal.ddlbx"
+                                        },
+                                        "9": {
+                                            "name": "constant.numeric.exponent.decimal.ddlbx",
+                                            "patterns": [
+                                                {
+                                                    "match": "(?<=[0-9a-fA-F])'(?=[0-9a-fA-F])",
+                                                    "name": "punctuation.separator.constant.numeric.ddlbx"
+                                                }
+                                            ]
+                                        },
+                                        "10": {
+                                            "name": "keyword.other.suffix.literal.built-in.floating-point.ddlbx keyword.other.unit.suffix.floating-point.ddlbx"
+                                        },
+                                        "11": {
+                                            "name": "keyword.other.suffix.literal.user-defined.integer.ddlbx keyword.other.unit.user-defined.ddlbx"
+                                        }
+                                    }
+                                },
+                                {
+                                    "match": "(\\G0[bB])([01](?:[01]|((?<=[0-9a-fA-F])'(?=[0-9a-fA-F])))*)((?:[uU]|(?:[uU]ll?)|(?:[uU]LL?)|(?:ll?[uU]?)|(?:LL?[uU]?)|[fF])(?!\\w))?((?:\\w(?<![0-9])\\w*)?$)",
+                                    "captures": {
+                                        "1": {
+                                            "name": "keyword.other.unit.binary.ddlbx"
+                                        },
+                                        "2": {
+                                            "name": "constant.numeric.binary.ddlbx",
+                                            "patterns": [
+                                                {
+                                                    "match": "(?<=[0-9a-fA-F])'(?=[0-9a-fA-F])",
+                                                    "name": "punctuation.separator.constant.numeric.ddlbx"
+                                                }
+                                            ]
+                                        },
+                                        "3": {
+                                            "name": "punctuation.separator.constant.numeric.ddlbx"
+                                        },
+                                        "4": {
+                                            "name": "keyword.other.suffix.literal.built-in.integer.ddlbx keyword.other.unit.suffix.integer.ddlbx"
+                                        },
+                                        "5": {
+                                            "name": "keyword.other.suffix.literal.user-defined.integer.ddlbx keyword.other.unit.user-defined.ddlbx"
+                                        }
+                                    }
+                                },
+                                {
+                                    "match": "(\\G0)((?:[0-7]|((?<=[0-9a-fA-F])'(?=[0-9a-fA-F])))+)((?:[uU]|(?:[uU]ll?)|(?:[uU]LL?)|(?:ll?[uU]?)|(?:LL?[uU]?)|[fF])(?!\\w))?((?:\\w(?<![0-9])\\w*)?$)",
+                                    "captures": {
+                                        "1": {
+                                            "name": "keyword.other.unit.octal.ddlbx"
+                                        },
+                                        "2": {
+                                            "name": "constant.numeric.octal.ddlbx",
+                                            "patterns": [
+                                                {
+                                                    "match": "(?<=[0-9a-fA-F])'(?=[0-9a-fA-F])",
+                                                    "name": "punctuation.separator.constant.numeric.ddlbx"
+                                                }
+                                            ]
+                                        },
+                                        "3": {
+                                            "name": "punctuation.separator.constant.numeric.ddlbx"
+                                        },
+                                        "4": {
+                                            "name": "keyword.other.suffix.literal.built-in.integer.ddlbx keyword.other.unit.suffix.integer.ddlbx"
+                                        },
+                                        "5": {
+                                            "name": "keyword.other.suffix.literal.user-defined.integer.ddlbx keyword.other.unit.user-defined.ddlbx"
+                                        }
+                                    }
+                                },
+                                {
+                                    "match": "(\\G0[xX])([0-9a-fA-F](?:[0-9a-fA-F]|((?<=[0-9a-fA-F])'(?=[0-9a-fA-F])))*)(?:(?<!')([pP])(\\+?)(\\-?)([0-9](?:[0-9]|(?<=[0-9a-fA-F])'(?=[0-9a-fA-F]))*))?((?:[uU]|(?:[uU]ll?)|(?:[uU]LL?)|(?:ll?[uU]?)|(?:LL?[uU]?)|[fF])(?!\\w))?((?:\\w(?<![0-9a-fA-FpP])\\w*)?$)",
+                                    "captures": {
+                                        "1": {
+                                            "name": "keyword.other.unit.hexadecimal.ddlbx"
+                                        },
+                                        "2": {
+                                            "name": "constant.numeric.hexadecimal.ddlbx",
+                                            "patterns": [
+                                                {
+                                                    "match": "(?<=[0-9a-fA-F])'(?=[0-9a-fA-F])",
+                                                    "name": "punctuation.separator.constant.numeric.ddlbx"
+                                                }
+                                            ]
+                                        },
+                                        "3": {
+                                            "name": "punctuation.separator.constant.numeric.ddlbx"
+                                        },
+                                        "4": {
+                                            "name": "keyword.other.unit.exponent.hexadecimal.ddlbx"
+                                        },
+                                        "5": {
+                                            "name": "keyword.operator.plus.exponent.hexadecimal.ddlbx"
+                                        },
+                                        "6": {
+                                            "name": "keyword.operator.minus.exponent.hexadecimal.ddlbx"
+                                        },
+                                        "7": {
+                                            "name": "constant.numeric.exponent.hexadecimal.ddlbx",
+                                            "patterns": [
+                                                {
+                                                    "match": "(?<=[0-9a-fA-F])'(?=[0-9a-fA-F])",
+                                                    "name": "punctuation.separator.constant.numeric.ddlbx"
+                                                }
+                                            ]
+                                        },
+                                        "8": {
+                                            "name": "keyword.other.suffix.literal.built-in.integer.ddlbx keyword.other.unit.suffix.integer.ddlbx"
+                                        },
+                                        "9": {
+                                            "name": "keyword.other.suffix.literal.user-defined.integer.ddlbx keyword.other.unit.user-defined.ddlbx"
+                                        }
+                                    }
+                                },
+                                {
+                                    "match": "\\G(?=[0-9.])(?!0[xXbB])([0-9](?:[0-9]|((?<=[0-9a-fA-F])'(?=[0-9a-fA-F])))*)(?:(?<!')([eE])(\\+?)(\\-?)([0-9](?:[0-9]|(?<=[0-9a-fA-F])'(?=[0-9a-fA-F]))*))?((?:[uU]|(?:[uU]ll?)|(?:[uU]LL?)|(?:ll?[uU]?)|(?:LL?[uU]?)|[fF])(?!\\w))?((?:\\w(?<![0-9eE])\\w*)?$)",
+                                    "captures": {
+                                        "1": {
+                                            "name": "constant.numeric.decimal.ddlbx",
+                                            "patterns": [
+                                                {
+                                                    "match": "(?<=[0-9a-fA-F])'(?=[0-9a-fA-F])",
+                                                    "name": "punctuation.separator.constant.numeric.ddlbx"
+                                                }
+                                            ]
+                                        },
+                                        "2": {
+                                            "name": "punctuation.separator.constant.numeric.ddlbx"
+                                        },
+                                        "3": {
+                                            "name": "keyword.other.unit.exponent.decimal.ddlbx"
+                                        },
+                                        "4": {
+                                            "name": "keyword.operator.plus.exponent.decimal.ddlbx"
+                                        },
+                                        "5": {
+                                            "name": "keyword.operator.minus.exponent.decimal.ddlbx"
+                                        },
+                                        "6": {
+                                            "name": "constant.numeric.exponent.decimal.ddlbx",
+                                            "patterns": [
+                                                {
+                                                    "match": "(?<=[0-9a-fA-F])'(?=[0-9a-fA-F])",
+                                                    "name": "punctuation.separator.constant.numeric.ddlbx"
+                                                }
+                                            ]
+                                        },
+                                        "7": {
+                                            "name": "keyword.other.suffix.literal.built-in.integer.ddlbx keyword.other.unit.suffix.integer.ddlbx"
+                                        },
+                                        "8": {
+                                            "name": "keyword.other.suffix.literal.user-defined.integer.ddlbx keyword.other.unit.user-defined.ddlbx"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        },
+        "string_context": {
+            "patterns": [
+                {
+                    "begin": "(R?)(')",
+                    "end": "'",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "meta.encoding.cpp"
+                        },
+                        "2": {
+                            "name": "punctuation.definition.string.begin.assembly.cpp"
+                        }
+                    },
+                    "endCaptures": {
+                        "0": {
+                            "name": "punctuation.definition.string.end.assembly.cpp"
+                        }
+                    },
+                    "name": "string.quoted.double.cpp"
+                }
+            ]
+        },
+        "loop_declaration": {
+            "patterns": [
+                {
+                    "begin": "\\b(for)\\b",
+                    "beginCaptures": {
+                        "1": { "name": "keyword.control.ddlbx" }
+                    },
+                    "end": "\\s*}",
+                    "endCaptures": {
+                        "0": { "name": "punctuation.terminator.ddlbx" }
+                    },
+                    "name": "meta.control.ddlbx",
+                    "patterns": [
+                        {
+                            "match": "\\(\\s*(\\w+)\\s*(from|to)\\s*(\\w+)\\s*(to|step)?\\s*(\\w+)?\\s*(step)?\\s*(\\w+)?\\s*\\)",
+                            "captures": {
+                                "1": {
+                                    "patterns": [
+                                        { "include": "#variable" },
+                                        { "include": "#number_literal" }
+                                    ]
+                                },
+                                "2": { "name": "keyword.control.ddlbx" },
+                                "3": {
+                                    "patterns": [
+                                        { "include": "#variable" },
+                                        { "include": "#number_literal" }
+                                    ]
+                                },
+                                "4": { "name": "keyword.control.ddlbx" },
+                                "5": {
+                                    "patterns": [
+                                        { "include": "#variable" },
+                                        { "include": "#number_literal" }
+                                    ]
+                                },
+                                "6": { "name": "keyword.control.ddlbx" },
+                                "7": {
+                                    "patterns": [
+                                        { "include": "#variable" },
+                                        { "include": "#number_literal" }
+                                    ]
+                                }
+                            }
+                        },
+                        { "include": "#function_statement_define" }
+                    ]
                 }
             ]
         }
