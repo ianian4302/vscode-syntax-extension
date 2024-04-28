@@ -24,3 +24,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 * **add:** nested function structure define
 
     Now they can be highlight correctly
+
+## [0.0.5]
+
+* **add:** condition declaration now is working
