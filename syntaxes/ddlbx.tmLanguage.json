@@ -67,6 +67,7 @@
                 { "include": "#keyword_define" },
                 { "include": "#loop_declaration" },
                 { "include": "#custom_structure_println" },
+                { "include": "#condition_declaration" },
                 { "include": "#function_call_define" },
                 { "include": "#function_arguments" },
                 { "include": "#commet" },
@@ -890,6 +891,42 @@
                                 },
                                 "6": { "name": "keyword.control.ddlbx" },
                                 "7": {
+                                    "patterns": [
+                                        { "include": "#variable" },
+                                        { "include": "#number_literal" }
+                                    ]
+                                }
+                            }
+                        },
+                        { "include": "#function_statement_define" }
+                    ]
+                }
+            ]
+        },
+        "condition_declaration": {
+            "patterns": [
+                {
+                    "begin": "\\b(opt)\\b",
+                    "beginCaptures": {
+                        "1": { "name": "keyword.control.ddlbx" }
+                    },
+                    "end": "\\s*}",
+                    "endCaptures": {
+                        "0": { "name": "punctuation.terminator.ddlbx" }
+                    },
+                    "name": "meta.control.ddlbx",
+                    "patterns": [
+                        {
+                            "match": "\\(\\s*(\\w+)\\s*(==|!=|<=|>=|<|>|and|or)\\s*(\\w+)\\s*\\)",
+                            "captures": {
+                                "1": {
+                                    "patterns": [
+                                        { "include": "#variable" },
+                                        { "include": "#number_literal" }
+                                    ]
+                                },
+                                "2": { "name": "keyword.operator.comparison.ddlbx" },
+                                "3": {
                                     "patterns": [
                                         { "include": "#variable" },
                                         { "include": "#number_literal" }
