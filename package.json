@@ -2,6 +2,7 @@
     "name": "ddlbx-extension",
     "displayName": "DDLBX extension",
     "description": "extension for ddlbx",
+    "icon": "assests/icon.png",
     "version": "0.0.4",
     "engines": {
         "vscode": "^1.85.0"
@@ -23,7 +24,11 @@
                 "extensions": [
                     ".ddlbx"
                 ],
-                "configuration": "./language-configuration.json"
+                "configuration": "./language-configuration.json",
+                "icon": {
+                    "light": "assests/icon.png",
+                    "dark": "assests/icon.png"
+                }   
             }
         ],
         "grammars": [
@@ -37,6 +42,10 @@
             {
                 "command": "ddlbx-extension.helloWorld",
                 "title": "Hello World"
+            },
+            {
+                "command": "ddlbx-extension.format",
+                "title": "Formet DDLBX"
             }
         ]
     },
