@@ -23,6 +23,14 @@
         },
         {
             "include": "#object_call"
+        },
+        {
+            "match": "\\b(\\w+)\\b",
+            "captures": {
+                "1": {
+                    "name": "variable.other"
+                }
+            }
         }
     ],
     "repository": {
@@ -37,8 +45,12 @@
         "keyword_define": {
             "patterns": [
                 {
-                    "match": "\\b(ret|opt|for|get)\\b",
+                    "match": "\\b(ret|opt|for|get|from|to|step)\\b",
                     "name": "keyword.control"
+                },
+                {
+                    "match": "\\b(var)\\b",
+                    "name": "keyword.other"
                 },
                 {
                     "match": "\\b(\\d+)\\b",
@@ -49,7 +61,7 @@
                     "name": "string.quoted.single"
                 },
                 {
-                    "match": "\\b(true|false)\\b",
+                    "match": "\\b(true|false|this)\\b",
                     "name": "constant.language"
                 }
             ]
@@ -71,7 +83,7 @@
         },
         "function_define": {
             "begin": "\\b(fun)",
-            "end": "\\:\\s*\\w+\\s*\\{",
+            "end": "\\b\\w+\\s*[!{]",
             "beginCaptures": {
                 "0": {
                     "name": "keyword.other"
@@ -101,6 +113,60 @@
                 },
                 {
                     "include": "#parameter_define"
+                }
+            ]
+        },
+        "object_define": {
+            "begin": "\\b(obj)",
+            "end": "\\{",
+            "beginCaptures": {
+                "0": {
+                    "name": "keyword.other"
+                }
+            },
+            "patterns": [
+                {
+                    "match": "\\b(\\w+)",
+                    "captures": {
+                        "1": {
+                            "name": "entity.name.class"
+                        }
+                    }
+                }
+            ]
+        },
+        "function_call": {
+            "patterns": [
+                {
+                    "match": "\\b(\\w+)\\s*\\(",
+                    "captures": {
+                        "1": {
+                            "name": "entity.name.function"
+                        }
+                    }
+                }
+            ]
+        },
+        "object_call": {
+            "patterns": [
+                {
+                    "match": "\\b(\\w+)\\s*\\{",
+                    "captures": {
+                        "1": {
+                            "name": "entity.name.class"
+                        }
+                    }
+                },
+                {
+                    "match": "\\b(\\w+)<(\\w+)>{",
+                    "captures": {
+                        "1": {
+                            "name": "entity.name.class"
+                        },
+                        "2": {
+                            "name": "support.type"
+                        }
+                    }
                 }
             ]
         }
